@@ -31,11 +31,9 @@ def motor1_func ():
             mot1.set_duty(PWM1)
             yield (0)
         except:
-            print('Sending Data!')
-            mot1.set_duty(0)
-            for i in range(len(controller1.time)):
-                print(controller1.time[i], controller1.listpos[i])
+            pass
         
+    
 
 def motor2_func():
     """!
@@ -49,10 +47,7 @@ def motor2_func():
             mot2.set_duty(PWM2)
             yield (0)
         except:
-            print('Sending Data!')
-            mot2.set_duty(0)
-            for i in range(len(controller2.time)):
-                print(controller2.time[i], controller2.listpos[i])
+            pass
 
 
 def task2_fun ():
@@ -100,22 +95,22 @@ if __name__ == "__main__":
 
     mot1 = motor_drv.MotorDriver(ENA, IN1, IN2, tim3)
     enc1 = EncoderReader.EncoderReader(1)
-    controller1 = controlloop.ClosedLoop(.15, 13000)
+    controller1 = controlloop.ClosedLoop(.15, 30000)
 
     mot2 = motor_drv.MotorDriver(ENB, IN3, IN4, tim5)
     enc2 = EncoderReader.EncoderReader(2)
-    controller2 = controlloop.ClosedLoop(.15, 13000)
+    controller2 = controlloop.ClosedLoop(.15, 30000)
 
     # Create the tasks. If trace is enabled for any task, memory will be
     # allocated for state transition tracing, and the application will run out
     # of memory after a while and quit. Therefore, use tracing only for 
     # debugging and set trace to False when it's not needed
-    task1 = cotask.Task (motor1_func, name = 'MotorTask_1', priority = 1, 
-                         period = 10, profile = True, trace = False)
+#     task1 = cotask.Task (motor1_func, name = 'MotorTask_1', priority = 1, 
+#                          period = 10, profile = True, trace = False)
     task2 = cotask.Task (motor2_func, name = 'MotorTask_2', priority = 1, 
-                         period = 10, profile = True, trace = False)
+                         period = 1, profile = True, trace = False)
     
-    cotask.task_list.append (task1)
+#     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
 
     # Run the memory garbage collector to ensure memory is as defragmented as
@@ -130,8 +125,12 @@ if __name__ == "__main__":
 
     # Empty the comm port buffer of the character(s) just pressed
     vcp.read ()
+    for i in range(len(controller2.time)):
+            print(controller2.time[i], controller2.listpos[i])
+            
 
-    # Print a table of task data and a table of shared information data
+
+# Print a table of task data and a table of shared information data
     print ('\n' + str (cotask.task_list))
     print (task_share.show_all ())
     print (task1.get_trace ())
