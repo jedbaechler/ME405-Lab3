@@ -14,19 +14,45 @@ import gc
 import pyb
 import cotask
 import task_share
+import EncoderReader, controlloop, pyb, utime
+import motor_baechler_chappell_wimberley as motor_drv
 
 
-def task1_fun ():
+
+def motor1_func ():
     """!
-    Task which puts things into a share and a queue.
+    
     """
-    counter = 0
     while True:
-        share0.put (counter)
-        q0.put (counter)
-        counter += 1
+        try:
+            PWM1 = controller1.run(enc1.read())
+            controller1.add_data()
+            print('Motor 1 Data:', enc1.read(), PWM1)
+            mot1.set_duty(PWM1)
+            yield (0)
+        except:
+            print('Sending Data!')
+            mot1.set_duty(0)
+            for i in range(len(controller1.time)):
+                print(controller1.time[i], controller1.listpos[i])
+        
 
-        yield (0)
+def motor2_func():
+    """!
+    
+    """
+    while True:
+        try:
+            PWM2 = controller2.run(enc2.read())
+            controller2.add_data()
+            print('Motor 2 Data:', enc2.read(), PWM2)
+            mot2.set_duty(PWM2)
+            yield (0)
+        except:
+            print('Sending Data!')
+            mot2.set_duty(0)
+            for i in range(len(controller2.time)):
+                print(controller2.time[i], controller2.listpos[i])
 
 
 def task2_fun ():
@@ -54,15 +80,41 @@ if __name__ == "__main__":
     share0 = task_share.Share ('h', thread_protect = False, name = "Share 0")
     q0 = task_share.Queue ('L', 16, thread_protect = False, overwrite = False,
                            name = "Queue 0")
+    
+    mot1_pos = task_share.Share('h', name='mot1_pos')
+    des_pos = task_share.Share('h', name='des_pos')
+    kp = task_share.Share('h', name='kp')
+    pwm1 = task_share.Share('h', name='pwm1')
+
+    """ PLEASE PLUG ENCODER 1 BLUE WIRE INTO B7 AND YELLOW WIRE TO B6"""
+    ENA = pyb.Pin (pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
+    IN1 = pyb.Pin (pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
+    IN2 = pyb.Pin (pyb.Pin.board.PB5, pyb.Pin.OUT_PP) #motor port A pins
+    tim3 = pyb.Timer (3, freq=20000)
+
+    """PLEASE PLUG ENCODER 2 BLUE WIRE INTO C7 AND YELLOW WIRE TO C6"""
+    ENB = pyb.Pin (pyb.Pin.board.PC1, pyb.Pin.OUT_PP)
+    IN3 = pyb.Pin (pyb.Pin.board.PA0, pyb.Pin.OUT_PP)
+    IN4 = pyb.Pin (pyb.Pin.board.PA1, pyb.Pin.OUT_PP) #motor port B pins
+    tim5 = pyb.Timer (5, freq=20000)
+
+    mot1 = motor_drv.MotorDriver(ENA, IN1, IN2, tim3)
+    enc1 = EncoderReader.EncoderReader(1)
+    controller1 = controlloop.ClosedLoop(.15, 13000)
+
+    mot2 = motor_drv.MotorDriver(ENB, IN3, IN4, tim5)
+    enc2 = EncoderReader.EncoderReader(2)
+    controller2 = controlloop.ClosedLoop(.15, 13000)
 
     # Create the tasks. If trace is enabled for any task, memory will be
     # allocated for state transition tracing, and the application will run out
     # of memory after a while and quit. Therefore, use tracing only for 
     # debugging and set trace to False when it's not needed
-    task1 = cotask.Task (task1_fun, name = 'Task_1', priority = 1, 
-                         period = 400, profile = True, trace = False)
-    task2 = cotask.Task (task2_fun, name = 'Task_2', priority = 2, 
-                         period = 1500, profile = True, trace = False)
+    task1 = cotask.Task (motor1_func, name = 'MotorTask_1', priority = 1, 
+                         period = 10, profile = True, trace = False)
+    task2 = cotask.Task (motor2_func, name = 'MotorTask_2', priority = 1, 
+                         period = 10, profile = True, trace = False)
+    
     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
 
