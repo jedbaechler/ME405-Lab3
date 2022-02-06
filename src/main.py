@@ -1,14 +1,18 @@
-"""!
-@file basic_tasks.py
-    This file contains a demonstration program that runs some tasks, an
-    inter-task shared variable, and a queue. The tasks don't really @b do
-    anything; the example just shows how these elements are created and run.
+'''
+    @file           main.py
+    @brief          An adapted main file from basic_tasks.py
+    @details        This file contains a demonstration program that runs 
+                    some tasks, an inter-task shared variable, and a queue. 
+                    The tasks don't really do anything; the example just shows
+                    how these elements are created and run. 
+                    We added motor control functions that act as the 
+                    scheduler.
 
-@author JR Ridgely
-@date   2021-Dec-15 JRR Created from the remains of previous example
-@copyright (c) 2015-2021 by JR Ridgely and released under the GNU
-    Public License, Version 2. 
-"""
+    @author         Jeremy Baechler
+    @author         Kendall Chappell
+    @author         Matthew Wimberley
+    @date           31-Jan-2022
+    '''
 
 import gc
 import pyb
@@ -20,9 +24,13 @@ import motor_baechler_chappell_wimberley as motor_drv
 
 
 def motor1_func ():
-    """!
-    
-    """
+    '''
+        @brief      instantiates motor 1 object
+        @details    This function reads the encoder data, which the controller
+                    uses to find the new PWM, which then sets the new motor
+                    speed.
+
+    '''
     while True:
         try:
             PWM1 = controller1.run(enc1.read())
@@ -36,9 +44,13 @@ def motor1_func ():
     
 
 def motor2_func():
-    """!
-    
-    """
+    '''
+        @brief      instantiates motor 2 object
+        @details    This function reads the encoder data, which the controller
+                    uses to find the new PWM, which then sets the new motor
+                    speed.
+
+    '''
     while True:
         try:
             PWM2 = controller2.run(enc2.read())
@@ -51,9 +63,12 @@ def motor2_func():
 
 
 def task2_fun ():
-    """!
-    Task which takes things out of a queue and share to display.
-    """
+    '''
+        @brief      prints data from shares and queues
+        @details    Because this is a generator, we only print the data
+                    at our discretion.
+        '''
+        
     while True:
         # Show everything currently in the queue and the value in the share
         print ("Share: {:}, Queue: ".format (share0.get ()), end='');
@@ -76,30 +91,30 @@ if __name__ == "__main__":
     q0 = task_share.Queue ('L', 16, thread_protect = False, overwrite = False,
                            name = "Queue 0")
     
-    mot1_pos = task_share.Share('h', name='mot1_pos')
-    des_pos = task_share.Share('h', name='des_pos')
-    kp = task_share.Share('h', name='kp')
-    pwm1 = task_share.Share('h', name='pwm1')
+    mot1_pos = task_share.Share('h', name='mot1_pos') #shares motor1 position
+    des_pos = task_share.Share('h', name='des_pos') #shares desired position
+    kp = task_share.Share('h', name='kp') #shares kp
+    pwm1 = task_share.Share('h', name='pwm1') #shares motor 1 duty cycle
 
     """ PLEASE PLUG ENCODER 1 BLUE WIRE INTO B7 AND YELLOW WIRE TO B6"""
-    ENA = pyb.Pin (pyb.Pin.board.PA10, pyb.Pin.OUT_PP)
-    IN1 = pyb.Pin (pyb.Pin.board.PB4, pyb.Pin.OUT_PP)
+    ENA = pyb.Pin (pyb.Pin.board.PA10, pyb.Pin.OUT_PP) #motor 1 enabler
+    IN1 = pyb.Pin (pyb.Pin.board.PB4, pyb.Pin.OUT_PP) 
     IN2 = pyb.Pin (pyb.Pin.board.PB5, pyb.Pin.OUT_PP) #motor port A pins
-    tim3 = pyb.Timer (3, freq=20000)
+    tim3 = pyb.Timer (3, freq=20000) #timer 3 
 
     """PLEASE PLUG ENCODER 2 BLUE WIRE INTO C7 AND YELLOW WIRE TO C6"""
-    ENB = pyb.Pin (pyb.Pin.board.PC1, pyb.Pin.OUT_PP)
+    ENB = pyb.Pin (pyb.Pin.board.PC1, pyb.Pin.OUT_PP) #motor 2 enabler
     IN3 = pyb.Pin (pyb.Pin.board.PA0, pyb.Pin.OUT_PP)
     IN4 = pyb.Pin (pyb.Pin.board.PA1, pyb.Pin.OUT_PP) #motor port B pins
-    tim5 = pyb.Timer (5, freq=20000)
+    tim5 = pyb.Timer (5, freq=20000) #using timer 5, must be different than m1
 
-    mot1 = motor_drv.MotorDriver(ENA, IN1, IN2, tim3)
-    enc1 = EncoderReader.EncoderReader(1)
-    controller1 = controlloop.ClosedLoop(.15, 30000)
+    mot1 = motor_drv.MotorDriver(ENA, IN1, IN2, tim3) #instants motor object
+    enc1 = EncoderReader.EncoderReader(1) #instantiates encoder reader object
+    controller1 = controlloop.ClosedLoop(.15, 30000) #sets gain and setpoint of m1
 
-    mot2 = motor_drv.MotorDriver(ENB, IN3, IN4, tim5)
-    enc2 = EncoderReader.EncoderReader(2)
-    controller2 = controlloop.ClosedLoop(.15, 30000)
+    mot2 = motor_drv.MotorDriver(ENB, IN3, IN4, tim5) #now for motor 1 
+    enc2 = EncoderReader.EncoderReader(2) #now for encoder 1
+    controller2 = controlloop.ClosedLoop(.15, 30000) #sets gain and setpoint of m2
 
     # Create the tasks. If trace is enabled for any task, memory will be
     # allocated for state transition tracing, and the application will run out
@@ -109,6 +124,7 @@ if __name__ == "__main__":
 #                          period = 10, profile = True, trace = False)
     task2 = cotask.Task (motor2_func, name = 'MotorTask_2', priority = 1, 
                          period = 1, profile = True, trace = False)
+    #runs task on motor 2, controlling the object
     
 #     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
