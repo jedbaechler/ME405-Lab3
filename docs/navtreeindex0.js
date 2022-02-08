@@ -67,8 +67,9 @@ var NAVTREEINDEX0 =
 "main_8py.html#ada335cc4e415d1c0b7919e9a412fbe06":[1,0,3,1],
 "motor__baechler__chappell__wimberley_8py.html":[1,0,4],
 "pages.html":[],
-"task__share_8py.html":[1,0,5],
-"task__share_8py.html#a130cad0bc96d3138e77344ea85586b7c":[1,0,5,3],
-"task__share_8py.html#a20669bcd5137496d47c279196fd7fbc5":[1,0,5,5],
-"task__share_8py.html#a75818e5b662453e3723d0f234c85e519":[1,0,5,4]
+"reader__lab3_8py.html":[1,0,5],
+"task__share_8py.html":[1,0,6],
+"task__share_8py.html#a130cad0bc96d3138e77344ea85586b7c":[1,0,6,3],
+"task__share_8py.html#a20669bcd5137496d47c279196fd7fbc5":[1,0,6,5],
+"task__share_8py.html#a75818e5b662453e3723d0f234c85e519":[1,0,6,4]
 };

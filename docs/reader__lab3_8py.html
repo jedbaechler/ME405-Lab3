@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ME405_Lab3: Member List</title>
+<title>ME405_Lab3: reader_lab3.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",'Search','.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('classcotask_1_1TaskList.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('reader__lab3_8py.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -92,23 +92,51 @@ $(document).ready(function(){initNavTree('classcotask_1_1TaskList.html',''); ini
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">cotask.TaskList Member List</div></div>
+  <div class="summary">
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">reader_lab3.py File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classcotask_1_1TaskList.html#a288413cdeddf60664542a92ce201200a">__init__</a>(self)</td><td class="entry"><a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classcotask_1_1TaskList.html#aa0632311ba902d3e5d75167dd4215dda">__repr__</a>(self)</td><td class="entry"><a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classcotask_1_1TaskList.html#aa690015d692390e17cb777ff367ae159">append</a>(self, task)</td><td class="entry"><a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classcotask_1_1TaskList.html#aac6e53cb4fec80455198ff85c85a4b51">pri_list</a></td><td class="entry"><a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classcotask_1_1TaskList.html#a5f7b264614e8e22c28d4c1509e3f30d8">pri_sched</a>(self)</td><td class="entry"><a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classcotask_1_1TaskList.html#a01614098aedc87b465d5525c6ccb47ce">rr_sched</a>(self)</td><td class="entry"><a class="el" href="classcotask_1_1TaskList.html">cotask.TaskList</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Reads serial inputs and puts 2 columns in lists.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ab8390f714b9d817fa94310e1b77d0309"><td class="memItemLeft" align="right" valign="top"><a id="ab8390f714b9d817fa94310e1b77d0309" name="ab8390f714b9d817fa94310e1b77d0309"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>reader_lab3.x</b> = []</td></tr>
+<tr class="separator:ab8390f714b9d817fa94310e1b77d0309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf9a1868e814170767544bc3a4bdab2"><td class="memItemLeft" align="right" valign="top"><a id="acbf9a1868e814170767544bc3a4bdab2" name="acbf9a1868e814170767544bc3a4bdab2"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>reader_lab3.y</b> = []</td></tr>
+<tr class="separator:acbf9a1868e814170767544bc3a4bdab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc6ce1fc2c5d46b0ad0b59ec298789f1"><td class="memItemLeft" align="right" valign="top"><a id="acc6ce1fc2c5d46b0ad0b59ec298789f1" name="acc6ce1fc2c5d46b0ad0b59ec298789f1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>reader_lab3.data_line</b> = s_port.readline().strip().decode()</td></tr>
+<tr class="separator:acc6ce1fc2c5d46b0ad0b59ec298789f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bebc87960ff2f9bdfc4e26a50059858"><td class="memItemLeft" align="right" valign="top"><a id="a9bebc87960ff2f9bdfc4e26a50059858" name="a9bebc87960ff2f9bdfc4e26a50059858"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>reader_lab3.new_data</b> = data_line.split(',')</td></tr>
+<tr class="separator:a9bebc87960ff2f9bdfc4e26a50059858"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fbbd5f424eca9ac55d338b71fe16a13"><td class="memItemLeft" align="right" valign="top"><a id="a0fbbd5f424eca9ac55d338b71fe16a13" name="a0fbbd5f424eca9ac55d338b71fe16a13"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>reader_lab3.t</b> = (float(new_data[0]))</td></tr>
+<tr class="separator:a0fbbd5f424eca9ac55d338b71fe16a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99262bf372059a95caf13b4b66d1d70a"><td class="memItemLeft" align="right" valign="top"><a id="a99262bf372059a95caf13b4b66d1d70a" name="a99262bf372059a95caf13b4b66d1d70a"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>reader_lab3.pos</b> = (float(new_data[1]))</td></tr>
+<tr class="separator:a99262bf372059a95caf13b4b66d1d70a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Reads serial inputs and puts 2 columns in lists. </p>
+<p >This file decodes the csv data written through the serial port and instantiates them as two lists. These two lists are converted to floats, where each row is then appended. With these two lists we are able to instantly print the step response.</p>
+<dl class="section author"><dt>Author</dt><dd>Jeremy Baechler </dd>
+<dd>
+Kendall Chappell </dd>
+<dd>
+Matthew Wimberley </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>7-Feb-2022 </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="reader__lab3_8py.html">reader_lab3.py</a></li>
     <li class="footer">Generated on Mon Feb 7 2022 18:35:20 for ME405_Lab3 by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>

@@ -1,7 +1,18 @@
 '''
-@file reader_lab3.py
+    @file           reader_lab3.py
+    @brief          Reads serial inputs and puts 2 columns in lists
+    @details        This file decodes the csv data written through the 
+                    serial port and instantiates them as two lists. These two
+                    lists are converted to floats, where each row is then 
+                    appended. With these two lists we are able to instantly
+                    print the step response.
 
-'''
+    @author         Jeremy Baechler
+    @author         Kendall Chappell
+    @author         Matthew Wimberley
+    @date           7-Feb-2022
+    '''
+    
 import serial, time
 from matplotlib import pyplot as plot
 
