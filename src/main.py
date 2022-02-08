@@ -35,7 +35,7 @@ def motor1_func ():
         try:
             PWM1 = controller1.run(enc1.read())
             controller1.add_data()
-            print('Motor 1 Data:', enc1.read(), PWM1)
+#             print('Motor 1 Data:', enc1.read(), PWM1)
             mot1.set_duty(PWM1)
             yield (0)
         except:
@@ -55,7 +55,7 @@ def motor2_func():
         try:
             PWM2 = controller2.run(enc2.read())
             controller2.add_data()
-            print('Motor 2 Data:', enc2.read(), PWM2)
+#             print('Motor 2 Data:', enc2.read(), PWM2)
             mot2.set_duty(PWM2)
             yield (0)
         except:
@@ -110,24 +110,24 @@ if __name__ == "__main__":
 
     mot1 = motor_drv.MotorDriver(ENA, IN1, IN2, tim3) #instants motor object
     enc1 = EncoderReader.EncoderReader(1) #instantiates encoder reader object
-    controller1 = controlloop.ClosedLoop(.15, 30000) #sets gain and setpoint of m1
+    controller1 = controlloop.ClosedLoop(.4, 30000) #sets gain and setpoint of m1
 
     mot2 = motor_drv.MotorDriver(ENB, IN3, IN4, tim5) #now for motor 1 
     enc2 = EncoderReader.EncoderReader(2) #now for encoder 1
-    controller2 = controlloop.ClosedLoop(.15, 30000) #sets gain and setpoint of m2
+    controller2 = controlloop.ClosedLoop(.4, 30000) #sets gain and setpoint of m2
 
     # Create the tasks. If trace is enabled for any task, memory will be
     # allocated for state transition tracing, and the application will run out
     # of memory after a while and quit. Therefore, use tracing only for 
     # debugging and set trace to False when it's not needed
-#     task1 = cotask.Task (motor1_func, name = 'MotorTask_1', priority = 1, 
-#                          period = 10, profile = True, trace = False)
-    task2 = cotask.Task (motor2_func, name = 'MotorTask_2', priority = 1, 
-                         period = 1, profile = True, trace = False)
+    task1 = cotask.Task (motor1_func, name = 'MotorTask_1', priority = 1, 
+                         period = 10, profile = True, trace = False)
+#     task2 = cotask.Task (motor2_func, name = 'MotorTask_2', priority = 1, 
+#                          period = 1, profile = True, trace = False)
     #runs task on motor 2, controlling the object
     
-#     cotask.task_list.append (task1)
-    cotask.task_list.append (task2)
+    cotask.task_list.append (task1)
+#     cotask.task_list.append (task2)
 
     # Run the memory garbage collector to ensure memory is as defragmented as
     # possible before the real-time scheduler is started
@@ -141,10 +141,14 @@ if __name__ == "__main__":
 
     # Empty the comm port buffer of the character(s) just pressed
     vcp.read ()
-    for i in range(len(controller2.time)):
-            print(controller2.time[i], controller2.listpos[i])
+    
+    
+    for i in range(len(controller1.time)):
+        print(controller1.time[i], ',', controller1.listpos[i])
+    
+    print('Stop Transmission')
             
-
+    
 
 # Print a table of task data and a table of shared information data
     print ('\n' + str (cotask.task_list))
