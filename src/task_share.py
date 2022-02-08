@@ -1,4 +1,4 @@
-"""!
+"""
 @file task_share.py
 This file contains classes which allow tasks to share data without the risk
 of data corruption by interrupts. 
@@ -30,7 +30,7 @@ type_code_strings = {'b' : "int8",   'B' : "uint8",
 
 
 def show_all ():
-    """!
+    """
     Create a string holding a diagnostic printout showing the status of
     each queue and share in the system. 
     @return A string containing information about each queue and share
@@ -42,7 +42,7 @@ def show_all ():
 # ============================================================================
 
 class BaseShare:
-    """!
+    """
     Base class for queues and shares which exchange data between tasks.
     
     One should never create an object from this class; it doesn't do anything
@@ -51,7 +51,7 @@ class BaseShare:
     """
 
     def __init__ (self, type_code, thread_protect = True, name = None):
-        """!
+        """
         Create a base queue object when called by a child class initializer.
 
         This method creates the things which queues and shares have in common.
@@ -66,7 +66,7 @@ class BaseShare:
 # ============================================================================
 
 class Queue (BaseShare):
-    """!
+    """
     A queue which is used to transfer data from one task to another.
 
     If parameter 'thread_protect' is @c True when a queue is created, transfers
@@ -94,7 +94,7 @@ class Queue (BaseShare):
 
     def __init__ (self, type_code, size, thread_protect = True, 
                   overwrite = False, name = None):
-        """!
+        """
         Initialize a queue object to carry and buffer data between tasks.
 
         This method sets up a queue by allocating memory for the contents and 
@@ -151,7 +151,7 @@ class Queue (BaseShare):
 
     @micropython.native
     def put (self, item, in_ISR = False):
-        """!
+        """
         Put an item into the queue.
 
         If there isn't room for the item, wait (blocking the calling process)
@@ -204,7 +204,7 @@ class Queue (BaseShare):
 
     @micropython.native
     def get (self, in_ISR = False):
-        """!
+        """
         Read an item from the queue.
 
         If there isn't anything in there, wait (blocking the calling process)
@@ -251,7 +251,7 @@ class Queue (BaseShare):
 
     @micropython.native
     def any (self):
-        """!
+        """
         Check if there are any items in the queue.
 
         Returns @c True if there are any items in the queue and @c False
@@ -263,7 +263,7 @@ class Queue (BaseShare):
 
     @micropython.native
     def empty (self):
-        """!
+        """
         Check if the queue is empty.
 
         Returns @c True if there are no items in the queue and @c False if 
@@ -275,7 +275,7 @@ class Queue (BaseShare):
 
     @micropython.native
     def full (self):
-        """!
+        """
         Check if the queue is full.
 
         This method returns @c True if the queue is already full and there
@@ -287,7 +287,7 @@ class Queue (BaseShare):
 
     @micropython.native
     def num_in (self):
-        """!
+        """
         Check how many items are in the queue.
 
         This method returns the number of items which are currently in the 
@@ -298,7 +298,7 @@ class Queue (BaseShare):
 
 
     def clear (self):
-        """!
+        """
         Remove all contents from the queue.
         """
         self._rd_idx = 0
@@ -308,7 +308,7 @@ class Queue (BaseShare):
 
 
     def __repr__ (self):
-        """!
+        """
         This method puts diagnostic information about the queue into a string.
 
         It shows the queue's name and type as well as the maximum number of
@@ -321,7 +321,7 @@ class Queue (BaseShare):
 # ============================================================================
 
 class Share (BaseShare):
-    """!
+    """
     An item which holds data to be shared between tasks.
     This class implements a shared data item which can be protected against
     data corruption by pre-emptive multithreading. Multithreading which can
@@ -348,7 +348,7 @@ class Share (BaseShare):
 
 
     def __init__ (self, type_code, thread_protect = True, name = None):
-        """!
+        """
         Create a shared data item used to transfer data between tasks.
 
         This method allocates memory in which the shared data will be buffered.
@@ -383,7 +383,7 @@ class Share (BaseShare):
 
     @micropython.native
     def put (self, data, in_ISR = False):
-        """!
+        """
         Write an item of data into the share.
 
         This method puts data into the share; any old data is overwritten.
@@ -407,7 +407,7 @@ class Share (BaseShare):
 
     @micropython.native
     def get (self, in_ISR = False):
-        """!
+        """
         Read an item of data from the share.
 
         If thread protection is enabled, interrupts are disabled during the time
@@ -429,7 +429,7 @@ class Share (BaseShare):
 
 
     def __repr__ (self):
-        """!
+        """
         Puts diagnostic information about the share into a string.
 
         Shares are pretty simple, so we just put the name and type. 

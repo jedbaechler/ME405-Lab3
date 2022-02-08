@@ -1,4 +1,4 @@
-"""!
+"""
 @file cotask.py
 This file contains classes to run cooperatively scheduled tasks in a
 multitasking system.
@@ -22,7 +22,7 @@ import micropython                     # This shuts up incorrect warnings
 
 
 class Task:
-    """!
+    """
     Implements multitasking with scheduling and some performance logging.
 
     This class implements behavior common to tasks in a cooperative 
@@ -36,7 +36,7 @@ class Task:
     Example:
       @code
           def task1_fun ():
-              '''! This function switches states repeatedly for no reason '''
+              ''' This function switches states repeatedly for no reason '''
               state = 0
               while True:
                   if state == 0:
@@ -59,7 +59,7 @@ class Task:
 
     def __init__ (self, run_fun, name = "NoName", priority = 0, 
                   period = None, profile = False, trace = False):
-        """!
+        """
         Initialize a task object so it may be run by the scheduler.
 
         This method initializes a task object, saving copies of constructor
@@ -124,7 +124,7 @@ class Task:
 
 
     def schedule (self) -> bool:
-        """!
+        """
         This method is called by the scheduler; it attempts to run this task.
         If the task is not yet ready to run, this method returns @c False
         immediately; if this task is ready to run, it runs the task's generator
@@ -181,7 +181,7 @@ class Task:
 
     @micropython.native
     def ready (self) -> bool:
-        """!
+        """
         This method checks if the task is ready to run.
         If the task runs on a timer, this method checks what time it is; if not,
         this method checks the flag which indicates that the task is ready to
@@ -220,7 +220,7 @@ class Task:
 
 
     def get_trace (self):
-        """!
+        """
         This method returns a string containing the task's transition trace.
         The trace is a set of tuples, each of which contains a time and the
         states from and to which the system transitioned. 
@@ -242,7 +242,7 @@ class Task:
 
 
     def go (self):
-        """!
+        """
         Method to set a flag so that this task indicates that it's ready to run.
         This method may be called from an interrupt service routine or from
         another task which has data that this task needs to process soon.
@@ -251,7 +251,7 @@ class Task:
 
 
     def __repr__ (self):
-        """!
+        """
         This method converts the task to a string for diagnostic use.
         It shows information about the task, including execution time
         profiling results if profiling has been done.
@@ -277,7 +277,7 @@ class Task:
 # =============================================================================
 
 class TaskList:
-    """!
+    """
     A list of tasks used internally by the task scheduler.
     This class holds the list of tasks which will be run by the task scheduler.
     The task list is usually not directly used by the programmer except when
@@ -292,7 +292,7 @@ class TaskList:
     """
 
     def __init__ (self):
-        """!
+        """
         Initialize the task list. This creates the list of priorities in
         which tasks will be organized by priority.
         """
@@ -304,7 +304,7 @@ class TaskList:
 
 
     def append (self, task):
-        """!
+        """
         Append a task to the task list. The list will be sorted by task 
         priorities so that the scheduler can quickly find the highest priority
         task which is ready to run at any given time. 
@@ -332,7 +332,7 @@ class TaskList:
 
     @micropython.native
     def rr_sched (self):
-        """!
+        """
         Run tasks in order, ignoring the tasks' priorities.
 
         This scheduling method runs tasks in a round-robin fashion. Each
@@ -351,7 +351,7 @@ class TaskList:
 
     @micropython.native
     def pri_sched (self):
-        """!
+        """
         Run tasks according to their priorities.
 
         This scheduler runs tasks in a priority based fashion. Each time it is
@@ -376,7 +376,7 @@ class TaskList:
 
 
     def __repr__ (self):
-        """!
+        """
         Create some diagnostic text showing the tasks in the task list.
         """
         ret_str = 'TASK             PRI    PERIOD    RUNS   AVG DUR   MAX ' \
